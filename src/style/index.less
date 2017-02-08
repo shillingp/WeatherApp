@@ -1,0 +1,55 @@
+@import 'helpers';
+
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background: #FAFAFA;
+	font-family: 'Helvetica Neue', arial, sans-serif;
+	font-weight: 400;
+	color: #444;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body  {
+	overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+		display:none;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#app {
+
+}
+
+#app {
+	display: flex;
+	min-height: 100%;
+	background-color: @back-color;
+
+	#sidebar {
+		width: 22%;
+		max-width: 300px;
+
+		background-color: red;
+	}
+	#weather-control {
+		width: 78%;
+	}
+}
+
+
+@import "weather/header";
+@import "weather/footer";
+@import "weather/items";
+@import "weather/alerts";
+
+
+@import "weather/media";

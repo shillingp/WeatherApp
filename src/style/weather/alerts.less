@@ -1,0 +1,29 @@
+@import "../helpers";
+
+.weekly-view {
+	.alerts {
+		.panel {
+			.panel-heading {
+				cursor: pointer;
+
+				span {
+					float: right;
+					line-height: 20px;
+					font-size: 12px;
+					opacity: 0.7;
+				}
+			}
+			.panel-body {
+				overflow: hidden;
+
+				.transition-timing(cubic-bezier(1, 0, 1, 0));
+				.transition(max-height 600ms);
+				max-height: 500px;
+
+				&.panel-collapsed {
+					max-height: 60px;
+				}
+			}
+		}
+	}
+}

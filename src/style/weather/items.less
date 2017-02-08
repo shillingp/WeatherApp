@@ -1,0 +1,44 @@
+@import "../helpers";
+
+.weekly-view {
+  padding-bottom: 40px;
+
+  .row {
+  	width: 100%;
+    margin: 0;
+
+    .weather-item {
+      margin-bottom: 20px;
+      margin-right: -20px;
+      padding-right: 20px;
+
+      h3 {
+    		font-size: 30px;
+    	}
+    	.weather-stats {
+    		float: left !important;
+    	}
+    	.weather-icon {
+    		float: right !important;
+    		padding: 10px;
+    	}
+
+      &:first-child {
+        @media not all and (orientation: landscape),
+               not all and (max-device-width: 740px) {
+          top: 0;
+          .sticky();
+          margin-bottom: 30px;
+          background-color: #fafafa;
+          z-index: @zindex1;
+          box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      &:not(:first-child) > div {
+        // background-color: red;
+        border-bottom: 1px solid lightgrey;
+      }
+    }
+  }
+}
