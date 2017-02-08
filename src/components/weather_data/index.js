@@ -1,14 +1,15 @@
 import oboe from "oboe";
 import { debounce } from "decko";
 
+import { secretKey, googKey } from "./secrets"
+
+
 var location = {
   lat: 51.507351,
   long: -0.127758
 };
 
 var currentWatch = null;
-
-const secretKey = "d5dd421f0a2e334db538b95f7d930d2c";
 
 const darkSky = () =>
   `https://api.darksky.net/forecast/${secretKey}/${location.lat},${location.long}?units=uk2`;
@@ -68,7 +69,7 @@ export function getLocationFromName(placeName) {
   navigator.geolocation.clearWatch(currentWatch);
 
   placeName = placeName.replace(/ /g, "+");
-  const goog = `https://maps.googleapis.com/maps/api/geocode/json?address=${placeName}&key=AIzaSyC6d9rxZdNmE0SnPKfMXx_oNT1JgAE5aR0`
+  const goog = `https://maps.googleapis.com/maps/api/geocode/json?address=${placeName}&key=${googKey}`
 
   oboe(goog)
     .done((res) => {

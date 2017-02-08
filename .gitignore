@@ -28,3 +28,5 @@ build/Release
 node_modules
 
 build/
+
+src/components/weather_data/secrets\.js
