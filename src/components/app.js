@@ -29,37 +29,23 @@ function AppManager(props) {
 }
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      daily: [],
-      warnings: []
-    }
-
-    this.updateStateInfo = this.updateStateInfo.bind(this);
-  }
-
-  updateStateInfo() {
-    window.setTimeout(_ => {
-      this.setState({
-        daily: WeatherData.daily,
-        warnings: WeatherData.alerts
-      })
-    }, 1);
-  }
+  state = {
+    daily: [],
+    warnings: [],
+  };
 
   componentWillMount() {
     gatherDataUsingLocation();
 
-    WeatherData.watch("daily", (id, oldVal, newVal) => {
-        this.updateStateInfo();
-        return newVal;
+    WeatherData.watch("counter", (id, oldVal, newVal) => {
+      window.setTimeout(_ => {
+        this.setState({
+          daily: WeatherData.daily,
+          warnings: WeatherData.alerts,
+        });
+      }, 1);
+      return newVal;
     });
-    // WeatherData.watch("alerts", (id, oldVal, newVal) => {
-    //     this.updateStateInfo();
-    //     return newVal;
-    // });
   }
 
 

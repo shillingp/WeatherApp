@@ -15,7 +15,9 @@ const darkSky = () =>
   `https://api.darksky.net/forecast/${secretKey}/${location.lat},${location.long}?units=uk2`;
 
 
-export var WeatherData = {};
+export var WeatherData = {
+  counter: 0
+};
 
 function gatherData() {
   var _daily, _alerts;
@@ -41,6 +43,7 @@ function gatherData() {
   	.done(result => {
       WeatherData.alerts = _alerts;
       WeatherData.daily = _daily;
+      WeatherData.counter++;
       // Daily MUST be last for watch to work and be efficient
   	});
 }

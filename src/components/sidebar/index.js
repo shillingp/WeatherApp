@@ -1,17 +1,14 @@
 import { h, Component } from 'preact';
-import { Link } from "preact-router";
 
 
 export default function SideBar(props) {
-  // props.weather = props.weather || [];
-
   const links = Object.entries({
     "/": "Home",
     "/daily": "Daily View",
   });
 
-  const items = links.map((item, index) =>
-    <li><a href={item[0]}>{item[1]}</a></li>
+  const items = links.map(([link, item]) =>
+    <li><a href={link}>{item}</a></li>
   );
 
   return (
@@ -20,5 +17,5 @@ export default function SideBar(props) {
         {items}
       </div>
     </div>
- )
+ );
 }

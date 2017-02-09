@@ -4,14 +4,14 @@ import LocationSearch from "./location_search";
 import WeatherItem from "./weather_item";
 import WeatherWarning from "./weather_warning";
 
-export default function WeeklyView(props) {
-  props.items = props.items || [];
-  props.warnings = props.warnings || [];
+export default function WeeklyView({ items, warnings }) {
+  items = items || [];
+  warnings = warnings || [];
 
-  const items = props.items.map((item, index) => {
+  const _items = items.map((item, index) => {
 		return <WeatherItem key={item.time} index={index} item={item} />
 	});
-	const warnings = props.warnings.map((item, index) => {
+	const _warnings = warnings.map((item, index) => {
 		return <WeatherWarning key={item.time} item={item} />
 	});
 
@@ -19,10 +19,10 @@ export default function WeeklyView(props) {
 		<div class="weekly-view">
       <LocationSearch />
 			<div class="row">
-				{items}
+				{_items}
 			</div>
 			<div class="alerts container">
-				{warnings}
+				{_warnings}
 			</div>
 		</div>
 	);
