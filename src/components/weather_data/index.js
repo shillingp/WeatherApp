@@ -36,7 +36,8 @@ const darkSky = () => {
 function gatherData() {
   var data = {};
 
-  oboe(darkSky())
+  oboe("../../assets/sample_data.json")
+  // oboe(darkSky())
     .node({
       "daily.$data.*": (result, index) => {
         if (result.length === 7) {
@@ -48,6 +49,9 @@ function gatherData() {
           data = {...data, daily: result}
         }
   		},
+      "hourly.$data.*": (result) => {
+        data = {...data, hourly: result}
+      },
       "$alerts.*": (result) => {
         data = {...data, alerts: result}
       }
@@ -56,7 +60,7 @@ function gatherData() {
       WeatherData.dispatch({
         type: "UPDATE",
         data: data
-      })
+      });
     })
 }
 

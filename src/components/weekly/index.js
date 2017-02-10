@@ -1,28 +1,31 @@
 import { h, Component } from 'preact';
 
+import { WeatherData } from "../weather_data";
+
 import LocationSearch from "./location_search";
 import WeatherItem from "./weather_item";
 import WeatherWarning from "./weather_warning";
 
-export default function WeeklyView({ items, warnings }) {
-  items = items || [];
-  warnings = warnings || [];
+export default function WeekView() {
+  let { daily, alerts } = WeatherData.getState();
+  daily = daily || [];
+  alerts = alerts || [];
 
-  const _items = items.map((item, index) => {
-		return <WeatherItem key={item.time} index={index} item={item} />
-	});
-	const _warnings = warnings.map((item, index) => {
-		return <WeatherWarning key={item.time} item={item} />
-	});
+  const items = daily.map((item, index) =>
+		<WeatherItem key={index} index={index} weather={item} />
+	);
+	const warnings = alerts.map((item, index) =>
+		<WeatherWarning key={index} warning={item} />
+	);
 
 	return (
-		<div class="weekly-view">
+		<div class="week-view">
       <LocationSearch />
 			<div class="row">
-				{_items}
+				{items}
 			</div>
 			<div class="alerts container">
-				{_warnings}
+				{warnings}
 			</div>
 		</div>
 	);

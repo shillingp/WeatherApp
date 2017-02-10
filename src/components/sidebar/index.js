@@ -4,7 +4,7 @@ import { h, Component } from 'preact';
 export default function SideBar(props) {
   const links = Object.entries({
     "/": "Home",
-    "/daily": "Daily View",
+    "/hourly": "Hourly Data"
   });
 
   const items = links.map(([link, item]) =>

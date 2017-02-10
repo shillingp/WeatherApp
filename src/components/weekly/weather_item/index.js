@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 
-import icons from "./icons";
-import { getUnits, setUnits } from "./units";
+import icons from "../../helpers/icons";
+import { getUnits } from "../../helpers/units";
 
 
 
@@ -43,24 +43,22 @@ function WeatherStats(props) {
   )
 }
 
-export default function WeatherItem({ item, index }, {}) {
+export default function WeatherItem({ weather, index }, {}) {
   var className = "col-xs-10 col-xs-offset-1 col-md-4";
   const today = " today col-sm-offset-2 col-md-offset-4 col-lg-4 col-lg-offset-4 col-sm-8";
   const other = " col-sm-offset-0 col-md-offset-1 col-lg-3 col-lg-offset-2  col-sm-6";
   className += index === 0 ? today : other;
 
-  //props.index % 2 === 0 ? "weather-item clearfix" : "weather-item"
-
   return (
     <section class={index === 0 ? "weather-item clearfix" : "weather-item"}>
       <div class={className}>
         <div class="clearfix">
-          <WeatherStats time={item.time} tempHi={item.temperatureMax}
-                        tempLo={item.temperatureMin} summary={item.summary}
-                        rainChance={item.precipProbability} index={index} />
-          <WeatherIcon icon={item.icon} />
+          <WeatherStats time={weather.time} tempHi={weather.temperatureMax}
+                        tempLo={weather.temperatureMin} summary={weather.summary}
+                        rainChance={weather.precipProbability} index={index} />
+          <WeatherIcon icon={weather.icon} />
         </div>
-        {index === 0 ? <div><p>{item.summary}</p></div> : null}
+        {index === 0 ? <div><p>{weather.summary}</p></div> : null}
       </div>
     </section>
   )

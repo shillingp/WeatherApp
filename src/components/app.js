@@ -1,8 +1,6 @@
 import { h, Component } from 'preact';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'preact-router';
 
-import "./helpers";
-
 import "bootstrap/dist/css/bootstrap.css";
 
 import { WeatherData, gatherDataUsingLocation } from "./weather_data";
@@ -11,8 +9,8 @@ import Heading from "./header";
 import Footer from "./footer";
 
 import SideBar from "./sidebar";
-import WeeklyView from "./weekly";
-
+import WeekView from "./weekly";
+import DayView from "./daily";
 
 
 function AppManager({ children }) {
@@ -36,16 +34,18 @@ export default class App extends Component {
   componentWillMount() {
     gatherDataUsingLocation();
 
-    WeatherData.subscribe(() =>
-      this.setState({ ...WeatherData.getState() }));
+    WeatherData.subscribe(() => {
+      console.log(WeatherData.getState());
+      this.setState({ ...WeatherData.getState() });
+    });
   }
 
   render(props, state) {
     return (
       <AppManager histroy={browserHistory} >
         <Router>
-          <WeeklyView path="/" items={state.daily} warnings={state.warnings} />
-          <SideBar path="/daily" weather={state.daily[6]} />
+          <WeekView path="/" />
+          <DayView path="/hourly" />
         </Router>
       </AppManager>
     );

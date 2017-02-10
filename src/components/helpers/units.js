@@ -2,23 +2,23 @@
 const unitTypes = {
   currentUnits: "si",
   si: {
-    nearestStormDistance: "km",
-    precipIntensity: "mm/h",
-    precipIntensityMax: "mm/h",
-    precipAccumulation: "cm",
+    nearestStormDistance: " km",
+    precipIntensity: " mm/h",
+    precipIntensityMax: " mm/h",
+    precipAccumulation: " cm",
     temperature: "°C",
     temperatureMin: "°C",
     temperatureMax: "°C",
     apparentTemperature: "°C",
     dewPoint: "°C",
-    windSpeed: "m/s",
-    pressure: "hPa",
-    visibility: "km",
+    windSpeed: " m/s",
+    pressure: " hPa",
+    visibility: " km",
   },
   uk2: {
-    nearestStormDistance: "mile",
-    visibility: "mile",
-    windSpeed: "mph",
+    nearestStormDistance: " mile",
+    visibility: " mile",
+    windSpeed: " mph",
   }
 }
 
@@ -28,7 +28,7 @@ export function getUnits(keyName) {
   if (units.hasOwnProperty(keyName)) {
     return units[keyName];
   } else {
-    return unitTypes.si[keyName];
+    return unitTypes.si[keyName] || "";
   }
 }
 

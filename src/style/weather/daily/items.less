@@ -1,0 +1,21 @@
+@import "../helpers";
+
+.day-view {
+  padding-bottom: 40px;
+
+  .row {
+  	width: 100%;
+    margin: 0;
+
+    .weather-item {
+      margin-bottom: 20px;
+      margin-right: -20px;
+      padding-right: 20px;
+
+      &:not(:first-child) > div {
+        // background-color: red;
+        border-bottom: 1px solid lightgrey;
+      }
+    }
+  }
+}

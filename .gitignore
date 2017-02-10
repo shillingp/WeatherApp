@@ -27,6 +27,11 @@ build/Release
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
 
+# personal build folder
 build/
 
+# personal secrets files
 src/components/weather_data/secrets\.js
+
+# sample data request
+src/assets/sample_data\.json
