@@ -5,7 +5,7 @@ import "./helpers";
 
 import "bootstrap/dist/css/bootstrap.css";
 
-import { WeatherData, gatherData, gatherDataUsingLocation } from "./weather_data";
+import { WeatherData, gatherDataUsingLocation } from "./weather_data";
 
 import Heading from "./header";
 import Footer from "./footer";
@@ -15,14 +15,13 @@ import WeeklyView from "./weekly";
 
 
 
-function AppManager(props) {
+function AppManager({ children }) {
   return (
     <div id="app">
       <SideBar />
       <div id="weather-control">
-        {props.children}
+        {children}
       </div>
-
       <Footer />
     </div>
   )
@@ -31,59 +30,24 @@ function AppManager(props) {
 export default class App extends Component {
   state = {
     daily: [],
-    warnings: [],
+    warnings: []
   };
 
   componentWillMount() {
     gatherDataUsingLocation();
 
-    WeatherData.watch("counter", (id, oldVal, newVal) => {
-      window.setTimeout(_ => {
-        this.setState({
-          daily: WeatherData.daily,
-          warnings: WeatherData.alerts,
-        });
-      }, 1);
-      return newVal;
-    });
+    WeatherData.subscribe(() =>
+      this.setState({ ...WeatherData.getState() }));
   }
 
-
-
-  render() {
+  render(props, state) {
     return (
       <AppManager histroy={browserHistory} >
         <Router>
-          <WeeklyView path="/" items={this.state.daily} warnings={this.state.warnings} />
-          <SideBar path="/daily" weather={this.state.daily[6]} />
+          <WeeklyView path="/" items={state.daily} warnings={state.warnings} />
+          <SideBar path="/daily" weather={state.daily[6]} />
         </Router>
       </AppManager>
     );
   }
 }
-
-
-
-// export default class App extends Component {
-// 	/** Gets fired when the route changes.
-// 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
-// 	 *	@param {string} event.url	The newly routed URL
-// 	 */
-//
-// 	handleRoute = e => {
-// 		this.currentUrl = e.url;
-// 	};
-//
-// 	render() {
-// 		return (
-// 			<div id="app">
-// 				<Header />
-// 				<Router onChange={this.handleRoute}>
-// 					<Home path="/" />
-// 					<Profile path="/profile/" user="me" />
-// 					<Profile path="/profile/:user" />
-// 				</Router>
-// 			</div>
-// 		);
-// 	}
-// }

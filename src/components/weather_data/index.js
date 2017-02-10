@@ -1,62 +1,78 @@
 import oboe from "oboe";
-import { debounce } from "decko";
+import { createStore } from "redux";
 
 import { secretKey, googKey } from "./secrets"
 
 
-var location = {
-  lat: 51.507351,
-  long: -0.127758
+const default_location = {
+  location: {
+    lat: 51.507351,
+    long: -0.127758
+  }
 };
-
 var currentWatch = null;
 
-const darkSky = () =>
-  `https://api.darksky.net/forecast/${secretKey}/${location.lat},${location.long}?units=uk2`;
+
+function weatherStore(state = default_location, action) {
+  switch (action.type) {
+    case "UPDATE":
+      return {...state, ...action.data}
+    case "SET_LOCATION":
+      return {...state, location: action.data}
+    default:
+      return state
+  }
+}
+
+export const WeatherData = createStore(weatherStore)
 
 
-export var WeatherData = {
-  counter: 0
+const darkSky = () => {
+  var {lat, long} = WeatherData.getState().location
+  return `https://api.darksky.net/forecast/${secretKey}/${lat},${long}?units=uk2`;
 };
 
+
 function gatherData() {
-  var _daily, _alerts;
+  var data = {};
 
   oboe(darkSky())
-  // oboe("../assets/sample_data.json")
     .node({
-  		"daily.$data.*": (result, index) => {
+      "daily.$data.*": (result, index) => {
         if (result.length === 7) {
           result = result.map(item => {
             item.icon = item.icon.replace(/-/g, "_");
             return item;
           });
-          _daily = result;
-          // WeatherData.daily = result;
+
+          data = {...data, daily: result}
         }
   		},
       "$alerts.*": (result) => {
-        _alerts = result;
-        // WeatherData.alerts = result;
+        data = {...data, alerts: result}
       }
-  	})
-  	.done(result => {
-      WeatherData.alerts = _alerts;
-      WeatherData.daily = _daily;
-      WeatherData.counter++;
-      // Daily MUST be last for watch to work and be efficient
-  	});
+    })
+    .done(result => {
+      WeatherData.dispatch({
+        type: "UPDATE",
+        data: data
+      })
+    })
 }
+
 
 export function gatherDataUsingLocation() {
   navigator.geolocation.clearWatch(currentWatch);
 
   if ("geolocation" in navigator) {
-    currentWatch = navigator.geolocation.watchPosition((pos) => {
-      location = {
-        lat: pos.coords.latitude,
-        long: pos.coords.longitude
-      };
+    currentWatch = navigator.geolocation.watchPosition(({ coords }) => {
+      WeatherData.dispatch({
+        type: "SET_LOCATION",
+        data: {
+          lat: coords.latitude,
+          long: coords.longitude
+        }
+      });
       gatherData();
     }, _ => {
       gatherData();
@@ -67,6 +83,7 @@ export function gatherDataUsingLocation() {
     console.log("no location status")
   }
 }
+
 
 export function getLocationFromName(placeName) {
   navigator.geolocation.clearWatch(currentWatch);
@@ -79,10 +96,13 @@ export function getLocationFromName(placeName) {
       res = res.results[0];
       const coords = res.geometry.location;
 
-      location = {
-        lat: coords.lat,
-        long: coords.lng
-      };
+      WeatherData.dispatch({
+        type: "SET_LOCATION",
+        data: {
+          lat: coords.lat,
+          long: coords.lng
+        }
+      });
       gatherData();
     });
 }

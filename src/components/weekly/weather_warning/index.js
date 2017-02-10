@@ -15,7 +15,7 @@ export default class WeatherWarning extends Component {
       isOpen: !this.state.isOpen
     })
   }
-  // render(props, state)
+
   render({ item }, { isOpen }) {
     const drawer = isOpen ? "panel-body" : "panel-body panel-collapsed";
 
