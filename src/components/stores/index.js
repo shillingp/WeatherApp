@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 
+
 export function weatherReducer(state = {}, action) {
   switch (action.type) {
     case "UPDATE":

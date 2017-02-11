@@ -1,4 +1,4 @@
-# Preact Boilerplate / Starter Kit
+# Preact/React Weather App
 
 
 ## Installation

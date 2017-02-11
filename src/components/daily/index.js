@@ -1,21 +1,19 @@
 import { h, Component } from "preact";
+import Chart from "chart.js";
 
 import { WeatherStore } from "../stores";
-import WeatherItem from "./weather_item";
+import WeatherChart from "./weather_chart";
 
 
 export default class DayView extends Component {
-  render() {
-    const { hourly } = WeatherStore.getState();
-
-    const items = (hourly || []).map((item, index) =>
-      <WeatherItem key={item.time} weather={item} />
-    );
+  render({ weather }, state) {
+    // var { hourly } = WeatherStore.getState();
+    // hourly = hourly || null;
 
     return (
       <div class="day-view">
   			<div class="row">
-          {items}
+          <WeatherChart weather={ weather } />
   			</div>
   		</div>
     )

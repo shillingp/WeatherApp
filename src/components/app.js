@@ -28,6 +28,7 @@ function AppManager({ children }) {
 export default class App extends Component {
   state = {
     daily: [],
+    hourly: [],
     warnings: []
   };
 
@@ -39,12 +40,12 @@ export default class App extends Component {
     );
   }
 
-  render(props, state) {
+  render(props, { hourly }) {
     return (
       <AppManager histroy={browserHistory} >
         <Router>
           <WeekView path="/" />
-          <DayView path="/hourly" />
+          <DayView path="/hourly" weather={hourly} />
         </Router>
       </AppManager>
     );
