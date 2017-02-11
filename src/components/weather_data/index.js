@@ -1,7 +1,7 @@
 import oboe from "oboe";
-import { createStore } from "redux";
 
-import { secretKey, googKey } from "./secrets"
+import { WeatherStore } from "../stores";
+import { secretKey, googKey } from "./secrets";
 
 
 const default_location = {
@@ -13,22 +13,8 @@ const default_location = {
 var currentWatch = null;
 
 
-function weatherStore(state = default_location, action) {
-  switch (action.type) {
-    case "UPDATE":
-      return {...state, ...action.data}
-    case "SET_LOCATION":
-      return {...state, location: action.data}
-    default:
-      return state
-  }
-}
-
-export const WeatherData = createStore(weatherStore)
-
-
 const darkSky = () => {
-  var {lat, long} = WeatherData.getState().location
+  var {lat, long} = WeatherStore.getState().location
   return `https://api.darksky.net/forecast/${secretKey}/${lat},${long}?units=uk2`;
 };
 
@@ -57,7 +43,7 @@ function gatherData() {
       }
     })
     .done(result => {
-      WeatherData.dispatch({
+      WeatherStore.dispatch({
         type: "UPDATE",
         data: data
       });
@@ -70,7 +56,7 @@ export function gatherDataUsingLocation() {
 
   if ("geolocation" in navigator) {
     currentWatch = navigator.geolocation.watchPosition(({ coords }) => {
-      WeatherData.dispatch({
+      WeatherStore.dispatch({
         type: "SET_LOCATION",
         data: {
           lat: coords.latitude,
@@ -100,7 +86,7 @@ export function getLocationFromName(placeName) {
       res = res.results[0];
       const coords = res.geometry.location;
 
-      WeatherData.dispatch({
+      WeatherStore.dispatch({
         type: "SET_LOCATION",
         data: {
           lat: coords.lat,

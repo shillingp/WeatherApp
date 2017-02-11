@@ -3,11 +3,11 @@ import { Router, Route, IndexRoute, Link, browserHistory } from 'preact-router';
 
 import "bootstrap/dist/css/bootstrap.css";
 
-import { WeatherData, gatherDataUsingLocation } from "./weather_data";
+import { WeatherStore } from "./stores";
+import { gatherDataUsingLocation } from "./weather_data";
 
 import Heading from "./header";
 import Footer from "./footer";
-
 import SideBar from "./sidebar";
 import WeekView from "./weekly";
 import DayView from "./daily";
@@ -34,9 +34,9 @@ export default class App extends Component {
   componentWillMount() {
     gatherDataUsingLocation();
 
-    WeatherData.subscribe(() => {
-      console.log(WeatherData.getState());
-      this.setState({ ...WeatherData.getState() });
+    WeatherStore.subscribe(() => {
+      console.log(WeatherStore.getState().daily);
+      this.setState({ ...WeatherStore.getState() });
     });
   }
 

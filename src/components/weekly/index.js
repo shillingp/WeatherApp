@@ -1,13 +1,13 @@
 import { h, Component } from 'preact';
 
-import { WeatherData } from "../weather_data";
+import { WeatherStore } from "../stores";
 
 import LocationSearch from "./location_search";
 import WeatherItem from "./weather_item";
 import WeatherWarning from "./weather_warning";
 
 export default function WeekView() {
-  let { daily, alerts } = WeatherData.getState();
+  let { daily, alerts } = WeatherStore.getState();
   daily = daily || [];
   alerts = alerts || [];
 
