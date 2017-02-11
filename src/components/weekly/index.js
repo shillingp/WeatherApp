@@ -8,13 +8,11 @@ import WeatherWarning from "./weather_warning";
 
 export default function WeekView() {
   let { daily, alerts } = WeatherStore.getState();
-  daily = daily || [];
-  alerts = alerts || [];
 
-  const items = daily.map((item, index) =>
+  const items = (daily || []).map((item, index) =>
 		<WeatherItem key={index} index={index} weather={item} />
 	);
-	const warnings = alerts.map((item, index) =>
+	const warnings = (alerts || []).map((item, index) =>
 		<WeatherWarning key={index} warning={item} />
 	);
 

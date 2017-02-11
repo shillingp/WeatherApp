@@ -34,10 +34,9 @@ export default class App extends Component {
   componentWillMount() {
     gatherDataUsingLocation();
 
-    WeatherStore.subscribe(() => {
-      console.log(WeatherStore.getState().daily);
-      this.setState({ ...WeatherStore.getState() });
-    });
+    WeatherStore.subscribe(() =>
+      this.setState({ ...WeatherStore.getState() })
+    );
   }
 
   render(props, state) {
