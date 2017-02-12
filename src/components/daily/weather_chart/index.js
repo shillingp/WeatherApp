@@ -5,25 +5,26 @@ import { WeatherStore } from "../../stores";
 import { toTitleCase } from "../../helpers";
 import { getUnits } from "../../helpers/units";
 
+
 export default class WeatherChart extends Component {
   state = {
     yaxes: "temperature"
   }
 
   updateChart() {
-    const { weather } = this.props;
-    const { yaxes } = this.state;
+    var { weather } = this.props;
+    var { yaxes } = this.state;
 
-    const labels = weather.map((item) => {
-      return new Date(item.time * 1000)
+    const labels = weather.map(item =>
+      new Date(item.time * 1000)
         .toLocaleTimeString("en-US", {
           hour: "2-digit", minute: "2-digit"
-        });
-    })
+        })
+    );
 
-    const items = weather.map((item) => {
-      return item[yaxes]
-    });
+    const items = weather.map(item =>
+      item[yaxes]
+    );
 
     this.weatherChart.data.datasets[0].data = items;
     this.weatherChart.data.datasets[0].label = toTitleCase(yaxes);
@@ -35,7 +36,6 @@ export default class WeatherChart extends Component {
     const { yaxes } = this.state;
 
     const options = {
-      animation: false,
       hover: {
         mode: "x",
         intersect: false
@@ -72,9 +72,7 @@ export default class WeatherChart extends Component {
             color: "rgba(0, 0, 0, 0.05)"
           },
           ticks: {
-            callback: val => (
-              Math.round(val) + getUnits(yaxes)
-            )
+            callback: val => (Math.round(val * 10) / 10) + getUnits(this.state.yaxes)
           }
         }]
       }
@@ -106,7 +104,10 @@ export default class WeatherChart extends Component {
     return true;
   }
 
-  componentWillUpdate() {
+  componentWillUpdate({ control }) {
+    this.setState({
+      yaxes: control
+    });
     this.updateChart();
   }
 

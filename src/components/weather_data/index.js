@@ -4,9 +4,8 @@ import { WeatherStore } from "../stores";
 import { secretKey, googKey } from "./secrets";
 
 
-
+var currentData = null
 var currentWatch = null;
-
 
 const darkSky = () => {
   var {lat, long} = WeatherStore.getState().location
@@ -17,8 +16,8 @@ const darkSky = () => {
 function gatherData() {
   var data = {};
 
-  // oboe("../../assets/sample_data.json")
-  oboe(darkSky())
+  oboe("../../assets/sample_data.json")
+  // oboe(darkSky())
     .node({
       "daily.$data.*": (result, index) => {
         if (result.length === 7) {
@@ -47,47 +46,53 @@ function gatherData() {
 
 
 export function gatherDataUsingLocation() {
-  navigator.geolocation.clearWatch(currentWatch);
+  if (currentData !== "location") {
+    currentData = "location"
+    if ("geolocation" in navigator) {
+      navigator.geolocation.clearWatch(currentWatch);
 
-  if ("geolocation" in navigator) {
-    currentWatch = navigator.geolocation.watchPosition(({ coords }) => {
-      WeatherStore.dispatch({
-        type: "SET_LOCATION",
-        data: {
-          lat: coords.latitude,
-          long: coords.longitude
-        }
+      currentWatch = navigator.geolocation.watchPosition(({ coords }) => {
+        WeatherStore.dispatch({
+          type: "SET_LOCATION",
+          data: {
+            lat: coords.latitude,
+            long: coords.longitude
+          }
+        });
+        gatherData();
+      }, _ => {
+        gatherData();
+      }, {
+        enableHighAccuracy: true
       });
-      gatherData();
-    }, _ => {
-      gatherData();
-    }, {
-      enableHighAccuracy: true
-    });
-  } else {
-    console.log("no location status")
+    } else {
+      console.log("no location status")
+    }
   }
 }
 
 
 export function getLocationFromName(placeName) {
-  navigator.geolocation.clearWatch(currentWatch);
+  if (currentData !== placeName) {
+    currentData = placeName
+    navigator.geolocation.clearWatch(currentWatch);
 
-  placeName = placeName.replace(/ /g, "+");
-  const goog = `https://maps.googleapis.com/maps/api/geocode/json?address=${placeName}&key=${googKey}`
+    placeName = placeName.replace(/ /g, "+");
+    const goog = `https://maps.googleapis.com/maps/api/geocode/json?address=${placeName}&key=${googKey}`
 
-  oboe(goog)
-    .done((res) => {
-      res = res.results[0];
-      const coords = res.geometry.location;
+    oboe(goog)
+      .done((res) => {
+        res = res.results[0];
+        const coords = res.geometry.location;
 
-      WeatherStore.dispatch({
-        type: "SET_LOCATION",
-        data: {
-          lat: coords.lat,
-          long: coords.lng
-        }
+        WeatherStore.dispatch({
+          type: "SET_LOCATION",
+          data: {
+            lat: coords.lat,
+            long: coords.lng
+          }
+        });
+        gatherData();
       });
-      gatherData();
-    });
+  }
 }

@@ -14,6 +14,7 @@ const unitTypes = {
     windSpeed: " m/s",
     pressure: " hPa",
     visibility: " km",
+    cloudCover: "%"
   },
   uk2: {
     nearestStormDistance: " mile",
