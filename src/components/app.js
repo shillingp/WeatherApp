@@ -40,11 +40,11 @@ export default class App extends Component {
     );
   }
 
-  render(props, { hourly }) {
+  render(props, { daily, hourly, warnings }) {
     return (
       <AppManager histroy={browserHistory} >
         <Router>
-          <WeekView path="/" />
+          <WeekView path="/" weather={daily} alerts={warnings} />
           <DayView path="/hourly" weather={hourly} />
         </Router>
       </AppManager>

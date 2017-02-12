@@ -1,15 +1,12 @@
 import { h, Component } from 'preact';
 
-import { WeatherStore } from "../stores";
-
 import LocationSearch from "./location_search";
 import WeatherItem from "./weather_item";
 import WeatherWarning from "./weather_warning";
 
-export default function WeekView() {
-  let { daily, alerts } = WeatherStore.getState();
 
-  const items = (daily || []).map((item, index) =>
+export default function WeekView({ weather, alerts }) {
+  const items = (weather || []).map((item, index) =>
 		<WeatherItem key={index} index={index} weather={item} />
 	);
 	const warnings = (alerts || []).map((item, index) =>
