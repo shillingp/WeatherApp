@@ -3,6 +3,7 @@ import Chart from "chart.js";
 
 import { WeatherStore } from "../../stores";
 import { toTitleCase } from "../../helpers";
+import { getUnits } from "../../helpers/units";
 
 export default class WeatherChart extends Component {
   state = {
@@ -31,7 +32,7 @@ export default class WeatherChart extends Component {
   }
 
   componentDidMount() {
-    const ctx = this.canvas;
+    const { yaxes } = this.state;
 
     const options = {
       animation: false,
@@ -41,7 +42,14 @@ export default class WeatherChart extends Component {
       },
       tooltips: {
         mode: "x",
-        intersect: false
+        intersect: false,
+        displayColors: false,
+        callbacks: {
+          label: (tool, data) => {
+            let label = data.datasets[tool.datasetIndex].label;
+            return `${label}: ${tool.yLabel}${getUnits(yaxes)}`;
+          }
+        }
       },
       legend: {
         display: false
@@ -52,10 +60,27 @@ export default class WeatherChart extends Component {
           hoverRadius: 5,
           hitRadius: 2
         }
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            color: "rgba(0, 0, 0, 0.05)"
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            color: "rgba(0, 0, 0, 0.05)"
+          },
+          ticks: {
+            callback: val => (
+              Math.round(val) + getUnits(yaxes)
+            )
+          }
+        }]
       }
     };
 
-    this.weatherChart = new Chart(ctx, {
+    this.weatherChart = new Chart(this.canvas, {
       type: "line",
       data: {
         labels: [],

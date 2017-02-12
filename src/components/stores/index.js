@@ -1,7 +1,13 @@
 import { createStore } from "redux";
 
+const init = {
+  location: {
+    lat: 51.507351,
+    long: -0.127758
+  }
+};
 
-export function weatherReducer(state = {}, action) {
+export function weatherReducer(state = init, action) {
   switch (action.type) {
     case "UPDATE":
       return {...state, ...action.data};
