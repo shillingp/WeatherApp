@@ -22,8 +22,8 @@ const darkSky = () => {
 function gatherData() {
   var data = {};
 
-  // oboe("../../assets/sample_data.json")
-  oboe(darkSky())
+  oboe("../../assets/sample_data.json")
+  // oboe(darkSky())
     .node({
       "daily.$data.*": (result, index) => {
         if (result.length === 7) {
