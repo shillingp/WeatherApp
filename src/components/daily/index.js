@@ -26,7 +26,7 @@ export default class DayView extends Component {
       <div class="day-view">
   			<div class="row">
           <WeatherChart weather={weather} control={control} />
-          <ChartControls onClick={this.changeData} />
+          <ChartControls onClick={this.changeData} control={control} />
   			</div>
   		</div>
     )

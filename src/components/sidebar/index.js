@@ -7,8 +7,10 @@ export default function SideBar(props) {
     "/hourly": "Hourly Data"
   });
 
-  const items = links.map(([link, item]) =>
-    <li><a href={link}>{item}</a></li>
+  const items = links.map(([link, item], index) =>
+    <li key={index}>
+      <a href={link}>{item}</a>
+    </li>
   );
 
   return (

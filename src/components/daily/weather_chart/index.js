@@ -1,7 +1,6 @@
 import { h, Component } from "preact";
 import Chart from "chart.js";
 
-import { WeatherStore } from "../../stores";
 import { toTitleCase } from "../../helpers";
 import { getUnits } from "../../helpers/units";
 
@@ -47,7 +46,7 @@ export default class WeatherChart extends Component {
         callbacks: {
           label: (tool, data) => {
             let label = data.datasets[tool.datasetIndex].label;
-            return `${label}: ${tool.yLabel}${getUnits(yaxes)}`;
+            return `${label}: ${tool.yLabel}${getUnits(this.state.yaxes)}`;
           }
         }
       },
@@ -72,7 +71,8 @@ export default class WeatherChart extends Component {
             color: "rgba(0, 0, 0, 0.05)"
           },
           ticks: {
-            callback: val => (Math.round(val * 10) / 10) + getUnits(this.state.yaxes)
+            callback: val =>
+              (Math.round(val * 10) / 10) + getUnits(this.state.yaxes)
           }
         }]
       }
@@ -101,14 +101,12 @@ export default class WeatherChart extends Component {
     if (weather === null) {
       return false;
     }
-    return true;
   }
 
   componentWillUpdate({ control }) {
     this.setState({
       yaxes: control
-    });
-    this.updateChart();
+    }, this.updateChart);
   }
 
   componentWillUnmount() {

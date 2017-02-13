@@ -4,7 +4,7 @@ import { WeatherStore } from "../stores";
 import { secretKey, googKey } from "./secrets";
 
 
-var currentData = null
+var currentData = null;
 var currentWatch = null;
 
 const darkSky = () => {
@@ -16,8 +16,8 @@ const darkSky = () => {
 function gatherData() {
   var data = {};
 
-  oboe("../../assets/sample_data.json")
-  // oboe(darkSky())
+  // oboe("../../assets/sample_data.json")
+  oboe(darkSky())
     .node({
       "daily.$data.*": (result, index) => {
         if (result.length === 7) {
@@ -45,28 +45,32 @@ function gatherData() {
 }
 
 
-export function gatherDataUsingLocation() {
-  if (currentData !== "location") {
-    currentData = "location"
-    if ("geolocation" in navigator) {
-      navigator.geolocation.clearWatch(currentWatch);
+function setGeoLocation() {
+  navigator.geolocation.clearWatch(currentWatch);
 
-      currentWatch = navigator.geolocation.watchPosition(({ coords }) => {
-        WeatherStore.dispatch({
-          type: "SET_LOCATION",
-          data: {
-            lat: coords.latitude,
-            long: coords.longitude
-          }
-        });
-        gatherData();
-      }, _ => {
-        gatherData();
-      }, {
-        enableHighAccuracy: true
-      });
+  currentWatch = navigator.geolocation.watchPosition(({coords}) => {
+    WeatherStore.dispatch({
+      type: "SET_LOCATION",
+      data: {
+        lat: coords.latitude,
+        long: coords.longitude
+      }
+    });
+    gatherData()
+  }, () => {
+    gatherData();
+  }, {
+    enableHighAccuracy: false
+  });
+}
+
+export function gatherDataUsingLocation() {
+  if (currentData !== "__geolocation__") {
+    currentData = "__geolocation__"
+    if ("geolocation" in navigator) {
+      setGeoLocation();
     } else {
-      console.log("no location status")
+      alert("Cannot get your location");
     }
   }
 }
@@ -74,11 +78,11 @@ export function gatherDataUsingLocation() {
 
 export function getLocationFromName(placeName) {
   if (currentData !== placeName) {
-    currentData = placeName
-    navigator.geolocation.clearWatch(currentWatch);
+    currentData = placeName;
 
+    navigator.geolocation.clearWatch(currentWatch);
     placeName = placeName.replace(/ /g, "+");
-    const goog = `https://maps.googleapis.com/maps/api/geocode/json?address=${placeName}&key=${googKey}`
+    const goog = `https://maps.googleapis.com/maps/api/geocode/json?address=${placeName}&key=${googKey}`;
 
     oboe(goog)
       .done((res) => {

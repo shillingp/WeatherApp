@@ -1,34 +1,21 @@
 import { h, Component } from "preact";
 
+import { buttonValues } from "./buttons"
 
-export default class ChartControls extends Component {
-  state = {
-    // buttons: ["precipIntensity", "precipProbability", "temperature", "apparentTemperature", "dewPoint", "humidity", "windSpeed", "visibility", "cloudCover", "pressure", "ozone"];
 
-    buttons: {
-      precipIntensity: "Rain Fall",
-      precipProbability: "Chance of Rain",
-      temperature: "Temperature",
-      apparentTemperature: "Apparent Temperature",
-      dewPoint: "Dew",
-      humidity: "Humidity",
-      windSpeed: "windSpeed",
-      visibility: "Visibility",
-      pressure: "Pressure",
-      ozone: "Ozone"
-    }
-  };
 
-  render({ onClick }, { buttons }) {
-    const items = Object.entries(buttons).map(([k, v]) =>
-      <button type="button" class="btn btn-default"
-              onClick={() => onClick(k)}>{v}</button>
-    );
+export default function ChartControls({ onClick, control }) {
+  const items = Object.entries(buttonValues).map(([k, v], index) => {
+    let className = "btn btn-default";
+    className += (k === control) ? " active" : "";
 
     return (
-      <div>
-        {items}
-      </div>
+      <button type="button" class={className}
+              onClick={() => onClick(k)} key={index}>{v}</button>
     );
-  }
+  });
+
+  return (
+    <div>{items}</div>
+  )
 }

@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'preact-router';
+import { Router, Route } from 'preact-router';
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -18,6 +18,7 @@ function AppManager({ children }) {
     <div id="app">
       <SideBar />
       <div id="weather-control">
+        <Heading />
         {children}
       </div>
       <Footer />
@@ -40,9 +41,15 @@ export default class App extends Component {
     );
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.daily.length === 0) {
+      return false;
+    }
+  }
+
   render(props, { daily, hourly, warnings }) {
     return (
-      <AppManager histroy={browserHistory} >
+      <AppManager>
         <Router>
           <WeekView path="/" weather={daily} alerts={warnings} />
           <DayView path="/hourly" weather={hourly} />

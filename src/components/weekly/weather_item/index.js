@@ -2,31 +2,28 @@ import { h, Component } from 'preact';
 
 import icons from "../../helpers/icons";
 import { getUnits } from "../../helpers/units";
+import { getWeekDay } from "../../helpers";
 
 
 
 function WeatherIcon({ icon }, {}) {
   const iconSize = 100;
-  return <div class="weather-icon">
-            <svg version="1.1" id={`weather-${icon}`}
-                 xmlns="http://www.w3.org/2000/svg"
-                 x="0px" y="0px" width={`${iconSize}px`} height={`${iconSize}px`}
-                 viewBox="0 0 512 512" enableBackground="new 0 0 512 512">
-               <path fillRule="evenodd" clipRule="evenodd" fill="#1D1D1B"
-                     d={icons[icon]} /></svg></div>
+  return (
+    <div class="weather-icon">
+      <svg version="1.1" id={`weather-${icon}`}
+           xmlns="http://www.w3.org/2000/svg"
+           x="0px" y="0px" width={`${iconSize}px`} height={`${iconSize}px`}
+           viewBox="0 0 512 512" enableBackground="new 0 0 512 512">
+        <path fillRule="evenodd" clipRule="evenodd" fill="#1D1D1B"
+              d={icons[icon]} />
+      </svg>
+    </div>
+  )
 }
 
 function WeatherStats(props) {
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const date = new Date(props.time * 1000).getDay();
   const dateString = props.index === 0 ? "Today" :
-    props.index === 1 ? "Tomorrow" : days[date];
-
-  const rainChance = (
-    <div class="chance-rain">
-      <div>Change of rain: <span>{Math.round(props.rainChance * 100) + "%"}</span></div>
-    </div>
-  );
+    props.index === 1 ? "Tomorrow" : getWeekDay(props.time);
 
   return (
     <div class="weather-stats">
