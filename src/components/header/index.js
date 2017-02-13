@@ -4,7 +4,9 @@ import LocationSearch from "./location_search";
 
 export default function Heading(props) {
   return (
-    <LocationSearch />
+    <div class="container">
+      <LocationSearch />
+    </div>
   )
 
   // return (

@@ -5,9 +5,9 @@ export const buttonValues = {
   precipProbability: "Chance of Rain",
   temperature: "Temperature",
   apparentTemperature: "Apparent Temperature",
-  dewPoint: "Dew",
+  dewPoint: "Dew Point",
   humidity: "Humidity",
-  windSpeed: "windSpeed",
+  windSpeed: "Wind Speed",
   visibility: "Visibility",
   pressure: "Pressure",
   ozone: "Ozone"

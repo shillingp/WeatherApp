@@ -5,7 +5,7 @@ import { gatherDataUsingLocation, getLocationFromName } from "../../weather_data
 
 export default class LocationSearch extends Component {
   state = {
-    text: "Antarctica"
+    text: ""
   };
 
   render({}, { text }) {

@@ -41,6 +41,7 @@ export default class WeatherChart extends Component {
       },
       tooltips: {
         mode: "x",
+        position: "nearest",
         intersect: false,
         displayColors: false,
         callbacks: {
@@ -57,7 +58,7 @@ export default class WeatherChart extends Component {
         point: {
           radius: 4,
           hoverRadius: 5,
-          hitRadius: 2
+          hitRadius: 1
         }
       },
       scales: {

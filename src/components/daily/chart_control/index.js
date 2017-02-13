@@ -3,19 +3,18 @@ import { h, Component } from "preact";
 import { buttonValues } from "./buttons"
 
 
-
 export default function ChartControls({ onClick, control }) {
-  const items = Object.entries(buttonValues).map(([k, v], index) => {
-    let className = "btn btn-default";
-    className += (k === control) ? " active" : "";
-
-    return (
-      <button type="button" class={className}
-              onClick={() => onClick(k)} key={index}>{v}</button>
-    );
-  });
+  const items = Object.entries(buttonValues)
+    .sort((a, b) => a[1] > b[1])
+    .map(([k, v]) =>
+      <option key={k} value={k} selected={k === control}>{v}</option>
+  );
 
   return (
-    <div>{items}</div>
+    <div class="chart-controls container">
+      <select class="form-control " onChange={onClick}>
+        {items}
+      </select>
+    </div>
   )
 }
