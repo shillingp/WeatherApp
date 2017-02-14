@@ -1,0 +1,57 @@
+@import "../helpers";
+@import "./hamburger";
+
+@menu-width: 200px;
+
+#menubar {
+  height: 100%;
+  width: @menu-width;
+  left: -@menu-width;
+  position: fixed;
+  display: block;
+  z-index: @zindex2;
+  .transition(left .5s .5s);
+  background-color: rgb(237, 237, 237);
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.2);
+
+  &.expanded {
+    left: 0;
+  }
+
+  .links {
+    height: 100%;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+
+      li {
+        display: block;
+        width: 100%;
+        height: 10%;
+
+        a {
+          display: block;
+          height: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  #hamburger {
+    width: 60px;
+    height: 45px;
+    position: absolute;
+    top: -45px;
+    left: @menu-width;
+    margin: 55px 5px;
+    scale: 0.5;
+
+    &:hover {
+      scale: 0.55;
+    }
+  }
+}

@@ -8,7 +8,7 @@ import { gatherDataUsingLocation } from "./weather_data";
 
 import Heading from "./header";
 import Footer from "./footer";
-import SideBar from "./sidebar";
+import MenuBar from "./menubar";
 import WeekView from "./weekly";
 import DayView from "./daily";
 
@@ -16,7 +16,7 @@ import DayView from "./daily";
 function AppManager({ children }) {
   return (
     <div id="app">
-      <SideBar />
+      <MenuBar />
       <div id="weather-control">
         <Heading />
         {children}
@@ -32,6 +32,8 @@ export default class App extends Component {
     hourly: [],
     warnings: []
   };
+
+  handleRoute = e => this.currentUrl = e.url;
 
   componentWillMount() {
     gatherDataUsingLocation();
@@ -50,7 +52,7 @@ export default class App extends Component {
   render(props, { daily, hourly, warnings }) {
     return (
       <AppManager>
-        <Router>
+        <Router onChange={this.handleRoute}>
           <WeekView path="/" weather={daily} alerts={warnings} />
           <DayView path="/hourly" weather={hourly} />
         </Router>

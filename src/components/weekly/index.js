@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 
-// import LocationSearch from "./location_search";
 import WeatherItem from "./weather_item";
 import WeatherWarning from "./weather_warning";
 

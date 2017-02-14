@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import icons from "../../helpers/icons";
+import { weatherIcons } from "../../helpers/icons";
 import { getUnits } from "../../helpers/units";
 import { getWeekDay } from "../../helpers";
 
@@ -15,7 +15,7 @@ function WeatherIcon({ icon }, {}) {
            x="0px" y="0px" width={`${iconSize}px`} height={`${iconSize}px`}
            viewBox="0 0 512 512" enableBackground="new 0 0 512 512">
         <path fillRule="evenodd" clipRule="evenodd" fill="#1D1D1B"
-              d={icons[icon]} />
+              d={weatherIcons[icon]} />
       </svg>
     </div>
   )

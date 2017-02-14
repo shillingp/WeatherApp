@@ -23,33 +23,22 @@ body  {
 
 * {
 	box-sizing: border-box;
+	z-index: 0;
 }
 
 #app {
-
+	margin-bottom: 120px;
 }
 
-#app {
-	display: flex;
-	min-height: 100%;
-	background-color: @back-color;
+@import "weather/header";
+@import "weather/footer";
 
-	#sidebar {
-		width: 22%;
-		max-width: 300px;
+@import "weather/index";
 
-		background-color: red;
-	}
-	#weather-control {
-		width: 78%;
-	}
-}
-
-
-@import "weekly/header";
-@import "weekly/footer";
 @import "weekly/items";
 @import "weekly/alerts";
 @import "weekly/media";
 
 @import "daily/items";
+
+@import "menubar/menubar";
