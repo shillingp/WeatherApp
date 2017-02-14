@@ -110,12 +110,6 @@ export default class WeatherChart extends Component {
     }, this.updateChart);
   }
 
-  componentWillUnmount() {
-    this.weatherChart.destroy();
-    this.ctx = null;
-  }
-
-
   render() {
     return (
       <div class="weather-chart">
