@@ -11,7 +11,7 @@ export default function ChartControls({ onClick, control }) {
   );
 
   return (
-    <div class="chart-controls container">
+    <div class="chart-controls">
       <select class="form-control " onChange={onClick}>
         {items}
       </select>

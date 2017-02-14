@@ -35,6 +35,7 @@ export default class WeatherChart extends Component {
     const { yaxes } = this.state;
 
     const options = {
+      responsive: true,
       hover: {
         mode: "x",
         intersect: false
@@ -65,6 +66,10 @@ export default class WeatherChart extends Component {
         xAxes: [{
           gridLines: {
             color: "rgba(0, 0, 0, 0.05)"
+          },
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 14
           }
         }],
         yAxes: [{

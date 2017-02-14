@@ -38,7 +38,7 @@ export default class MenuBar extends Component {
 
     const items = links.map(([link, item], index) =>
       <li key={index} class="link col-xs-3">
-        <a href={link}>{item}</a>
+        <a href={link} onClick={this.handleOpen}>{item}</a>
       </li>
     );
 
@@ -52,28 +52,3 @@ export default class MenuBar extends Component {
    );
   }
 }
-
-// export default function MenuBar(props) {
-//   const links = Object.entries({
-//     "/": "Home",
-//     "/hourly": "Hourly Data",
-//     "/minute": "Minute Data",
-//     "/contact": "Contact Me"
-//   });
-//
-//   const items = links.map(([link, item], index) =>
-//     <li key={index} class="link col-xs-3">
-//       <a href={link}>{item}</a>
-//     </li>
-//   );
-//
-//   return (
-//     <div id="menubar" class="expanded">
-//       <div class="links">
-//         <ul>{items}</ul>
-//       </div>
-//
-//       <Hamburger />
-//     </div>
-//  );
-// }

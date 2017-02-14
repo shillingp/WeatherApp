@@ -3,12 +3,16 @@
 .day-view {
   padding-bottom: 40px;
 
-  .row {
-  	width: 100%;
-    margin: 0;
+  .content > * {
+    width: 100%;
 
-    .weather-chart * {
+    @media (min-device-width: 740px) {
       width: 90%;
+      margin: auto;
+    }
+
+    canvas {
+      margin: auto;
     }
   }
 }

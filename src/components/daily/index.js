@@ -22,11 +22,8 @@ export default class DayView extends Component {
 
   render({ weather }, { control }) {
     return (
-      <div class="day-view">
-        <div class="title-block">
-          <h3>24 Hour Forecast</h3>
-        </div>
-  			<div class="row">
+      <div class="day-view row">
+  			<div class="col-lg-8 col-lg-offset-2 content">
           <WeatherChart weather={weather} control={control} />
           <ChartControls onClick={this.changeData} control={control} />
   			</div>
