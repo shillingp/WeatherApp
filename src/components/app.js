@@ -4,7 +4,7 @@ import { Router, Route } from 'preact-router';
 import "bootstrap/dist/css/bootstrap.css";
 
 import { WeatherStore } from "./stores";
-import { gatherDataUsingLocation } from "./weather_data";
+import { gatherData } from "./weather_data";
 
 import Heading from "./header";
 import Footer from "./footer";
@@ -36,7 +36,8 @@ export default class App extends Component {
   handleRoute = e => this.currentUrl = e.url;
 
   componentWillMount() {
-    gatherDataUsingLocation();
+    // Does not use location data on page load
+    gatherData();
 
     WeatherStore.subscribe(() =>
       this.setState({ ...WeatherStore.getState() })

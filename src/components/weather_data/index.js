@@ -13,7 +13,7 @@ const darkSky = () => {
 };
 
 
-function gatherData() {
+export function gatherData() {
   var data = {};
 
   // // Using sample data request
