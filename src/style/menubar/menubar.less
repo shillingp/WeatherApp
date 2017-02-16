@@ -10,12 +10,12 @@
   position: fixed;
   display: block;
   z-index: @zindex2;
-  .transition(left .5s .5s);
+  .transition(left .5s .5s, box-shadow .35s .5s);
   background-color: rgb(237, 237, 237);
-  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.2);
 
   &.expanded {
     left: 0;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.2);
   }
 
   .links {
@@ -52,6 +52,14 @@
 
     &:hover {
       .transform(scale(0.55));
+    }
+
+    @media (min-device-width: 500px) {
+      opacity: 0.5;
+
+      &.open {
+        opacity: 1;
+      }
     }
   }
 }

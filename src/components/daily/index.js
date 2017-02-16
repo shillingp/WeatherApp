@@ -14,9 +14,9 @@ export default class DayView extends Component {
     this.changeData = this.changeData.bind(this);
   }
 
-  changeData({ target: { value }}) {
+  changeData({ target }) {
     this.setState({
-      control: value
+      control: target.value
     });
   }
 

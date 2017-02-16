@@ -1,10 +1,12 @@
 import { h, Component } from "preact";
 
+import style from "./style";
+
 
 export default function Footer(props) {
   // NEED TO FIX FOR MOBILE (XS) VIEW
   return (
-    <footer>
+    <footer class={style.footer}>
       <div class="foot">
         <div className="container">
           <div className="pull-left">

@@ -5,11 +5,13 @@
 			 		transform: @transform;
 }
 
-.transition(@transition) {
-	-webkit-transition: @transition;
-		 -moz-transition: @transition;
-		 	 -o-transition: @transition;
-			 		transition: @transition;
+// Hack to allow multiple arguments
+.transition(...) {
+	@props: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+	-webkit-transition: @props;
+		 -moz-transition: @props;
+		 	 -o-transition: @props;
+			 		transition: @props;
 }
 
 .transition-timing(@timing) {

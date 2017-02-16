@@ -10,6 +10,14 @@ export default class WeatherChart extends Component {
     yaxes: "temperature"
   }
 
+  addChartData(items, yaxes, labels) {
+    var { data } = this.weatherChart;
+    data.datasets[0].data = items;
+    data.datasets[0].label = toTitleCase(yaxes);
+    data.labels = labels;
+    this.weatherChart.update();
+  }
+
   updateChart() {
     var { weather } = this.props;
     var { yaxes } = this.state;
@@ -25,10 +33,7 @@ export default class WeatherChart extends Component {
       item[yaxes]
     );
 
-    this.weatherChart.data.datasets[0].data = items;
-    this.weatherChart.data.datasets[0].label = toTitleCase(yaxes);
-    this.weatherChart.data.labels = labels;
-    this.weatherChart.update();
+    this.addChartData(items, yaxes, labels);
   }
 
   componentDidMount() {

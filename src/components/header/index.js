@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
 
+import style from "./style";
+
 import LocationSearch from "./location_search";
 
 export default function Heading(props) {

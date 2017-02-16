@@ -21,38 +21,40 @@ function WeatherIcon({ icon }, {}) {
   )
 }
 
-function WeatherStats(props) {
-  const dateString = props.index === 0 ? "Today" :
-    props.index === 1 ? "Tomorrow" : getWeekDay(props.time);
+function WeatherStats({ weather, index }) {
+  const decimals = 1;
+
+  const dateString = index === 0 ? "Today" :
+    index === 1 ? "Tomorrow" : getWeekDay(weather.time);
 
   return (
     <div class="weather-stats">
       <h3>
-        <time dateTime={props.time}>
+        <time dateTime={weather.time}>
           {dateString}
         </time>
       </h3>
       <div class="temperatures">
-        <div>Hi: <span>{props.tempHi + getUnits("temperatureMax")}</span></div>
-        <div>Lo: <span>{props.tempLo + getUnits("temperatureMin")}</span></div>
+        <div>Hi: <span>{weather.temperatureMax.toFixed(decimals)
+          + getUnits("temperatureMax")}</span></div>
+        <div>Lo: <span>{weather.temperatureMin.toFixed(decimals)
+          + getUnits("temperatureMin")}</span></div>
       </div>
     </div>
   )
 }
 
 export default function WeatherItem({ weather, index }, {}) {
-  var className = "col-xs-10 col-xs-offset-1 col-md-4";
-  const today = " today col-sm-offset-2 col-md-offset-4 col-lg-4 col-lg-offset-4 col-sm-8";
-  const other = " col-sm-offset-0 col-md-offset-1 col-lg-3 col-lg-offset-2  col-sm-6";
+  var className = "col-xs-10 col-xs-offset-1 col-md-6";
+  const today = " today col-sm-offset-2 col-md-offset-3 col-lg-4 col-lg-offset-4 col-sm-8";
+  const other = " col-sm-offset-0 col-md-offset-0 col-lg-3 col-lg-offset-2  col-sm-6";
   className += index === 0 ? today : other;
 
   return (
     <section class={index === 0 ? "weather-item clearfix" : "weather-item"}>
       <div class={className}>
         <div class="clearfix">
-          <WeatherStats time={weather.time} tempHi={weather.temperatureMax}
-                        tempLo={weather.temperatureMin} summary={weather.summary}
-                        rainChance={weather.precipProbability} index={index} />
+          <WeatherStats weather={weather} index={index} />
           <WeatherIcon icon={weather.icon} />
         </div>
         {index === 0 ? <div><p>{weather.summary}</p></div> : null}

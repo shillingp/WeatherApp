@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
 
+import { debounce } from "../helpers";
+
 
 function Hamburger({ isOpen, onClick }) {
   let spans = Array(6).fill(<span />)
@@ -19,13 +21,20 @@ export default class MenuBar extends Component {
       isOpen: false
     }
 
-    this.handleOpen = this.handleOpen.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
-  handleOpen() {
+  toggleMenu() {
     this.setState({
       isOpen: !this.state.isOpen
-    })
+    });
+  }
+
+  closeMenu() {
+    this.setState({
+      isOpen: false
+    });
   }
 
   render({}, { isOpen }) {
@@ -38,7 +47,7 @@ export default class MenuBar extends Component {
 
     const items = links.map(([link, item], index) =>
       <li key={index} class="link col-xs-3">
-        <a href={link} onClick={this.handleOpen}>{item}</a>
+      <a href={link} onClick={this.closeMenu}>{item}</a>
       </li>
     );
 
@@ -47,7 +56,7 @@ export default class MenuBar extends Component {
         <div class="links">
           <ul>{items}</ul>
         </div>
-        <Hamburger isOpen={isOpen} onClick={this.handleOpen} />
+        <Hamburger isOpen={isOpen} onClick={this.toggleMenu}/>
       </div>
    );
   }
