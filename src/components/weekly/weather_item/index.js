@@ -10,12 +10,10 @@ function WeatherIcon({ icon }, {}) {
   const iconSize = 100;
   return (
     <div class="weather-icon">
-      <svg version="1.1" id={`weather-${icon}`}
-           xmlns="http://www.w3.org/2000/svg"
-           x="0px" y="0px" width={`${iconSize}px`} height={`${iconSize}px`}
+      <svg id={`weather-${icon}`} x="0px" y="0px"
+           width={`${iconSize}px`} height={`${iconSize}px`}
            viewBox="0 0 512 512" enableBackground="new 0 0 512 512">
-        <path fillRule="evenodd" clipRule="evenodd" fill="#1D1D1B"
-              d={weatherIcons[icon]} />
+        <path fill="#1D1D1B" d={weatherIcons[icon]} />
       </svg>
     </div>
   )
