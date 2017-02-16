@@ -1,7 +1,5 @@
 import { h, Component } from 'preact';
-
-import { debounce } from "../helpers";
-
+import { bind } from "decko";
 
 function Hamburger({ isOpen, onClick }) {
   let spans = Array(6).fill(<span />)
@@ -15,22 +13,18 @@ function Hamburger({ isOpen, onClick }) {
 }
 
 export default class MenuBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    }
-
-    this.toggleMenu = this.toggleMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
+  state = {
+    isOpen: false
   }
 
+  @bind
   toggleMenu() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
+  @bind
   closeMenu() {
     this.setState({
       isOpen: false

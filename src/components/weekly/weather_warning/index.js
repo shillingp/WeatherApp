@@ -1,15 +1,13 @@
 import { h, Component } from 'preact';
+import { bind } from "decko";
+
 
 export default class WeatherWarning extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isOpen: false
-    }
-
-    this.toggleDrawer = this.toggleDrawer.bind(this);
+  state = {
+    isOpen: false
   }
 
+  @bind
   toggleDrawer() {
     this.setState({
       isOpen: !this.state.isOpen
