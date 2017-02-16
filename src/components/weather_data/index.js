@@ -12,8 +12,7 @@ const darkSky = () => {
   return `https://api.darksky.net/forecast/${secretKey}/${lat},${long}?units=uk2`;
 };
 
-
-export function gatherData() {
+function gatherData() {
   var data = {};
 
   // // Using sample data request
@@ -99,5 +98,21 @@ export function getLocationFromName(placeName) {
         });
         gatherData();
       });
+  }
+}
+
+export function firstDataFetch() {
+  if ("geolocation" in navigator) {
+    navigator.permissions.query({
+      name: "geolocation"
+    }).then(perm => {
+      if (perm.state === "granted") {
+        gatherDataUsingLocation();
+      } else {
+        gatherData();
+      }
+    })
+  } else {
+    gatherData();
   }
 }
